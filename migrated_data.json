@@ -1,0 +1,26 @@
+[
+  {
+    "amount": 100,
+    "date": "2024-01-01",
+    "email": "john@gmail.com",
+    "name": "John"
+  },
+  {
+    "amount": 200,
+    "date": "2024-01-02",
+    "email": "N/A",
+    "name": "Jane"
+  },
+  {
+    "amount": 0,
+    "date": "2024-01-03",
+    "email": "bob@gmail.com",
+    "name": "Bob"
+  },
+  {
+    "amount": 300,
+    "date": "N/A",
+    "email": "alice@gmail.com",
+    "name": "Alice"
+  }
+]
