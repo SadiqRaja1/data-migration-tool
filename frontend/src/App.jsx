@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-const API = 'http://127.0.0.1:5000/api'
+const API = 'https://data-migration-tool.onrender.com/' || 'http://127.0.0.1:5000/api'
 
 const Badge = ({ children, color = 'blue' }) => {
   const colors = {
