@@ -44,7 +44,7 @@ def upload_csv() :
             missing[col] = missing_count
 
     # preview 
-    preview = df.head(5).fillna('NULL').to_dict(orient='records')
+    preview = df.fillna('NULL').to_dict(orient='records')
 
     return jsonify({
         "success": True,
