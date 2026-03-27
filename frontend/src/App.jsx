@@ -42,6 +42,7 @@ export default function App() {
   const [activeStep, setActiveStep] = useState(1)
   const [error, setError] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [showAllRows, setShowAllRows] = useState(false)
   const [dragOver, setDragOver] = useState(false)
 
   const handleFileChange = (f) => {
@@ -143,14 +144,12 @@ export default function App() {
         <div className="flex items-center justify-center gap-2 mt-8 relative">
           {steps.map((step, i) => (
             <div key={step} className="flex items-center gap-2">
-              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                activeStep > i + 1 ? 'bg-white text-blue-700' :
+              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${activeStep > i + 1 ? 'bg-white text-blue-700' :
                 activeStep === i + 1 ? 'bg-white/20 text-white border border-white/40' :
-                'bg-white/10 text-blue-300'
-              }`}>
-                <span className={`w-4 h-4 rounded-full flex items-center justify-center text-xs ${
-                  activeStep > i + 1 ? 'bg-blue-600 text-white' : 'bg-white/20'
+                  'bg-white/10 text-blue-300'
                 }`}>
+                <span className={`w-4 h-4 rounded-full flex items-center justify-center text-xs ${activeStep > i + 1 ? 'bg-blue-600 text-white' : 'bg-white/20'
+                  }`}>
                   {activeStep > i + 1 ? '✓' : i + 1}
                 </span>
                 {step}
@@ -179,9 +178,8 @@ export default function App() {
               onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
-              className={`mt-3 border-2 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer ${
-                dragOver ? 'border-blue-400 bg-blue-50' : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-              }`}
+              className={`mt-3 border-2 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer ${dragOver ? 'border-blue-400 bg-blue-50' : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                }`}
               onClick={() => document.getElementById('fileInput').click()}
             >
               <input
@@ -284,7 +282,7 @@ export default function App() {
                       </tr>
                     </thead>
                     <tbody>
-                      {uploadResult.preview.map((row, i) => (
+                      {(showAllRows ? uploadResult.preview : uploadResult.preview.slice(0, 5)).map((row, i) => (
                         <tr key={i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                           {uploadResult.columns.map(col => (
                             <td key={col} className={`px-4 py-2.5 ${row[col] === 'NULL' || row[col] === null ? 'text-red-400 italic text-xs' : 'text-gray-700'}`}>
@@ -295,6 +293,14 @@ export default function App() {
                       ))}
                     </tbody>
                   </table>
+                  {uploadResult.preview.length > 5 && (
+                    <button
+                      onClick={() => setShowAllRows(!showAllRows)}
+                      className="w-full py-2.5 text-xs font-semibold text-blue-600 hover:bg-blue-50 transition-colors border-t border-gray-100"
+                    >
+                      {showAllRows ? '▲ Show Less' : `▼ Show All ${uploadResult.preview.length} Rows`}
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -361,9 +367,8 @@ export default function App() {
               </div>
               <button
                 onClick={handleCopySQL}
-                className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
-                  copied ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-900 hover:bg-gray-700 text-white'
-                }`}
+                className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${copied ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-900 hover:bg-gray-700 text-white'
+                  }`}
               >
                 {copied ? '✓ Copied!' : 'Copy SQL'}
               </button>
